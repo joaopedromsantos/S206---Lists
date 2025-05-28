@@ -8,9 +8,10 @@ describe("Testes de Alunos", () => {
     const nomeFinal = nomeBase + numeroAleatorio;
     const email = nomeFinal.toLowerCase().replace(/\s+/g, '') + "@inatel.br";
     const senha = "123456";
+    const tipoUsuario = 'Aluno';
 
-    acessarPaginaCadastroAluno();
-    preencherFormularioAluno(nomeBase, email, senha);
+    cy.acessarPaginaCadastro();
+    cy.preencherFormulario(tipoUsuario, nomeFinal, email, senha);
     
     cy.get('.Toastify__toast-body > :nth-child(2)').should("contain.text", "Usuário criado com sucesso!");
   });
@@ -19,9 +20,10 @@ describe("Testes de Alunos", () => {
     const nomeBase = "Arthur Morgan";
     const email = "arthur.morgan.inatel.br"; // Email sem '@'
     const senha = "123456";
+    const tipoUsuario = 'Aluno';
 
-    acessarPaginaCadastroAluno();
-    preencherFormularioAluno(nomeBase, email, senha);
+    cy.acessarPaginaCadastro();
+    cy.preencherFormulario(tipoUsuario, nomeBase, email, senha);
     
     cy.get('.Toastify__toast-body > :nth-child(2)').should("contain.text", "Por favor, insira um endereço de email válido.");
   });
@@ -32,9 +34,10 @@ describe("Testes de Alunos", () => {
     const nomeFinal = nomeBase + numeroAleatorio;
     const email = nomeFinal.toLowerCase().replace(/\s+/g, '') + "@inatel.br";
     const senha = "123456";
+    const tipoUsuario = 'Aluno';
     
-    acessarPaginaCadastroAluno();
-    preencherFormularioAluno(nomeBase, email, senha);
+    cy.acessarPaginaCadastro();
+    cy.preencherFormulario(tipoUsuario, nomeFinal, email, senha);
     cy.get('.Toastify__toast-body > :nth-child(2)').should("contain.text", "Usuário criado com sucesso!");
 
     // Tentativa de criar o mesmo usuário novamente
@@ -48,9 +51,10 @@ describe("Testes de Alunos", () => {
     const nomeFinal = nomeBase + numeroAleatorio;
     const email = nomeFinal.toLowerCase().replace(/\s+/g, '').normalize("NFD").replace(/[\u0300-\u036f]/g, "") + "@inatel.br";
     const senha = "123456";
+    const tipoUsuario = 'Aluno';
 
-    acessarPaginaCadastroAluno();
-    preencherFormularioAluno(nomeBase, email, senha);
+    cy.acessarPaginaCadastro();
+    cy.preencherFormulario(tipoUsuario, nomeFinal, email, senha);
     
     cy.get('.Toastify__toast-body > :nth-child(2)').should("contain.text", "Usuário criado com sucesso!");
   });
@@ -61,7 +65,7 @@ describe("Testes de Alunos", () => {
     const nomeFinal = nomeBase + numeroAleatorio;
     const email = nomeFinal.toLowerCase().replace(/\s+/g, '') + "@inatel.br";
 
-    acessarPaginaCadastroAluno();
+    cy.acessarPaginaCadastro();
 
     cy.get('.sc-dsAqUS').select('Aluno');
     cy.get(':nth-child(1) > .sc-bqOYya > .sc-gHjVMF').type(nomeBase);
@@ -77,7 +81,7 @@ describe("Testes de Alunos", () => {
     const email = "aluno_teste_" + Math.floor(Math.random() * 10000) + "@inatel.br";
     const senha = "123456";
 
-    acessarPaginaCadastroAluno();
+    cy.acessarPaginaCadastro();
 
     cy.get('.sc-dsAqUS').select('Aluno');
     // não digita o nome
@@ -90,25 +94,3 @@ describe("Testes de Alunos", () => {
   });
 
 });
-
-function login() {
-  let user = "pizz@";
-  let password = "123";
-  cy.visit('https://confianopai.com/login');
-  cy.get(':nth-child(2) > .sc-ktwOfi').type(user);
-  cy.get(':nth-child(3) > .sc-ktwOfi').type(password);
-  cy.get('.sc-csKJxZ').click();
-}
-
-function acessarPaginaCadastroAluno() {
-  login();    
-  cy.get('[href="/adm/novo-usuario"]').click();
-}
-
-function preencherFormularioAluno(nome, email, senha) {
-  cy.get('.sc-dsAqUS').select('Aluno');
-  if (nome !== "") cy.get(':nth-child(1) > .sc-bqOYya > .sc-gHjVMF').type(nome);
-  if (email !== "") cy.get(':nth-child(2) > .sc-bqOYya > .sc-gHjVMF').type(email);
-  if (senha !== "") cy.get(':nth-child(3) > .sc-bqOYya > .sc-gHjVMF').type(senha);
-  cy.get(':nth-child(4) > .sc-irLvIq > .sc-csKJxZ').click();
-}

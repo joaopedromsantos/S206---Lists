@@ -23,3 +23,25 @@
 //
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
+
+Cypress.Commands.add("login", () => {
+    const user = "pizz@";
+    const password = "123";
+    cy.visit('https://confianopai.com/login');
+    cy.get(':nth-child(2) > .sc-ktwOfi').type(user);
+    cy.get(':nth-child(3) > .sc-ktwOfi').type(password);
+    cy.get('.sc-csKJxZ').click();
+});
+
+Cypress.Commands.add("acessarPaginaCadastro", () => {
+    cy.login()
+    cy.get('[href="/adm/novo-usuario"]').click();
+});
+
+Cypress.Commands.add("preencherFormulario", (tipo, nome, email, senha) => {
+  cy.get('.sc-dsAqUS').select(tipo);  // 'Aluno' ou 'Orientador'
+  if (nome !== "") cy.get(':nth-child(1) > .sc-bqOYya > .sc-gHjVMF').type(nome);
+  if (email !== "") cy.get(':nth-child(2) > .sc-bqOYya > .sc-gHjVMF').type(email);
+  if (senha !== "") cy.get(':nth-child(3) > .sc-bqOYya > .sc-gHjVMF').type(senha);
+  cy.get(':nth-child(4) > .sc-irLvIq > .sc-csKJxZ').click();
+});

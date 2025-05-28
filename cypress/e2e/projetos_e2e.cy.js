@@ -28,7 +28,7 @@ describe("Testes da página de projetos", () => {
   beforeEach(() => {
     criarProjeto();
 
-    login();
+    cy.login();
   });
 
   it("Teste de buscar o projeto inserido e clicar nele com sucesso (READ)", () => {
@@ -102,21 +102,6 @@ describe("Testes da página de projetos", () => {
   });
   
 });
-
-function login() {
-  // Função para realizar o login no sistema
-
-  // Dados de login
-  let user = "pizz@";
-  let password = "123";
-
-  cy.visit('https://confianopai.com/login');
-  cy.wait(500);
-  cy.get(':nth-child(2) > .sc-ktwOfi').type(user);
-  cy.get(':nth-child(3) > .sc-ktwOfi').type(password);
-  cy.get('.sc-csKJxZ').click();
-
-}
 
 function criarProjeto() {
   // Gera um nome de projeto aleatório e armazena no ambiente do Cypress
