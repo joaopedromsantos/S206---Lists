@@ -1,0 +1,157 @@
+{
+  "stats": {
+    "suites": 1,
+    "tests": 4,
+    "passes": 4,
+    "pending": 0,
+    "failures": 0,
+    "start": "2025-05-28T04:40:49.587Z",
+    "end": "2025-05-28T04:41:08.169Z",
+    "duration": 18582,
+    "testsRegistered": 4,
+    "passPercent": 100,
+    "pendingPercent": 0,
+    "other": 0,
+    "hasOther": false,
+    "skipped": 0,
+    "hasSkipped": false
+  },
+  "results": [
+    {
+      "uuid": "224a9722-2a87-4c0a-a5b0-a21dc44c885b",
+      "title": "",
+      "fullFile": "cypress\\e2e\\test_e2e.cy.js",
+      "file": "cypress\\e2e\\test_e2e.cy.js",
+      "beforeHooks": [],
+      "afterHooks": [],
+      "tests": [],
+      "suites": [
+        {
+          "uuid": "be435849-b544-4e9d-af39-23609f20ca1d",
+          "title": "Testes da página de projetos",
+          "fullFile": "",
+          "file": "",
+          "beforeHooks": [],
+          "afterHooks": [],
+          "tests": [
+            {
+              "title": "Teste de criação de projeto manualmente com sucesso (CREATE)",
+              "fullTitle": "Testes da página de projetos Teste de criação de projeto manualmente com sucesso (CREATE)",
+              "timedOut": null,
+              "duration": 6501,
+              "state": "passed",
+              "speed": "medium",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "const nomeBase = \"Relógio do Ben 10 \";\nconst numeroAleatorio = Math.floor(Math.random() * 10001);\nconst nomeFinal = nomeBase + numeroAleatorio;\nCypress.env('nomeProjeto', nomeFinal);\nlogin();\ncy.get('.sc-jdHILj').click();\ncy.get('[href=\"/adm/add-projeto/cadastro\"]').click();\ncy.get('.sc-fYrVWQ > .sc-hsaIUA').type(nomeFinal);\ncy.get(':nth-child(2) > :nth-child(2) > .sc-hsaIUA').type(\"pizzonin@inatel.br\");\ncy.get(':nth-child(6) > :nth-child(2) > .sc-hsaIUA').type(\"chris@inatel.br\");\ncy.get(':nth-child(1) > .sc-bZTyFN > .sc-hlqirL').select(\"Sem pendências\");\ncy.get(':nth-child(2) > .sc-bZTyFN > .sc-hlqirL').select(\"Outro\");\ncy.get('.sc-eGgGjL > :nth-child(1)').click();\ncy.get('.Toastify__toast-body > :nth-child(2)').should(\"contain.text\", \"Equipe criada com sucesso\");\ncy.get('.sc-eGgGjL > :nth-child(2)').click();\ncy.get('.sc-fHejqy > .sc-irLvIq > .sc-csKJxZ').click();",
+              "err": {},
+              "uuid": "ed208fdc-efab-41ab-937a-acc1e7056a79",
+              "parentUUID": "be435849-b544-4e9d-af39-23609f20ca1d",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "Teste de buscar o projeto inserido e clicar nele com sucesso (READ)",
+              "fullTitle": "Testes da página de projetos Teste de buscar o projeto inserido e clicar nele com sucesso (READ)",
+              "timedOut": null,
+              "duration": 2514,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "const nomeFinal = Cypress.env('nomeProjeto');\nlogin();\ncy.get('.sc-ckdEwu').type(nomeFinal);\ncy.get('.sc-gjLLEI').click();\ncy.get('.sc-fHejqy > .sc-irLvIq > .sc-csKJxZ').click();",
+              "err": {},
+              "uuid": "e63add42-1bd5-47ca-a8ca-2325b97801be",
+              "parentUUID": "be435849-b544-4e9d-af39-23609f20ca1d",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "Teste de inserir um aluno extra no projeto (UPDATE)",
+              "fullTitle": "Testes da página de projetos Teste de inserir um aluno extra no projeto (UPDATE)",
+              "timedOut": null,
+              "duration": 3394,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "const nomeFinal = Cypress.env('nomeProjeto');\nlogin();\ncy.get('.sc-ckdEwu').type(nomeFinal);\ncy.get('.sc-gjLLEI').click();\ncy.get('.sc-cPtzlb > .sc-irLvIq > .sc-csKJxZ').click();\ncy.get('.sc-ppzwM').type(\"fonseca@inatel.br\");\ncy.get('.sc-hiTDLB').click();\ncy.get('.iTLMzn > .sc-csKJxZ').click();\ncy.get('.Toastify__toast-body > :nth-child(2)').should(\"contain.text\", \"Projeto atualizado com sucesso!\");\ncy.get('.eRUujA > .sc-csKJxZ').click();\ncy.get('.sc-fHejqy > .sc-irLvIq > .sc-csKJxZ').click();",
+              "err": {},
+              "uuid": "1159cee1-370d-4070-a245-a81a8b0bf248",
+              "parentUUID": "be435849-b544-4e9d-af39-23609f20ca1d",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "Teste negativo - inserir um aluno extra no projeto (UPDATE) que já está no projeto (ERRO)",
+              "fullTitle": "Testes da página de projetos Teste negativo - inserir um aluno extra no projeto (UPDATE) que já está no projeto (ERRO)",
+              "timedOut": null,
+              "duration": 3037,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "const nomeFinal = Cypress.env('nomeProjeto');\nlogin();\ncy.get('.sc-ckdEwu').type(nomeFinal);\ncy.get('.sc-gjLLEI').click();\ncy.get('.sc-cPtzlb > .sc-irLvIq > .sc-csKJxZ').click();\ncy.get('.sc-ppzwM').type(\"fonseca@inatel.br\");\ncy.get('.sc-hiTDLB').click();\ncy.get('.iTLMzn > .sc-csKJxZ').click();\ncy.get('.Toastify__toast-body > :nth-child(2)').should(\"contain.text\", \"Error: Não permitido o cadastro do mesmo aluno duas vezes\");",
+              "err": {},
+              "uuid": "3656723e-1c02-47db-a9ce-af29f61f6c21",
+              "parentUUID": "be435849-b544-4e9d-af39-23609f20ca1d",
+              "isHook": false,
+              "skipped": false
+            }
+          ],
+          "suites": [],
+          "passes": [
+            "ed208fdc-efab-41ab-937a-acc1e7056a79",
+            "e63add42-1bd5-47ca-a8ca-2325b97801be",
+            "1159cee1-370d-4070-a245-a81a8b0bf248",
+            "3656723e-1c02-47db-a9ce-af29f61f6c21"
+          ],
+          "failures": [],
+          "pending": [],
+          "skipped": [],
+          "duration": 15446,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 2000
+        }
+      ],
+      "passes": [],
+      "failures": [],
+      "pending": [],
+      "skipped": [],
+      "duration": 0,
+      "root": true,
+      "rootEmpty": true,
+      "_timeout": 2000
+    }
+  ],
+  "meta": {
+    "mocha": {
+      "version": "7.2.0"
+    },
+    "mochawesome": {
+      "options": {
+        "quiet": false,
+        "reportFilename": "mochawesome",
+        "saveHtml": true,
+        "saveJson": true,
+        "consoleReporter": "spec",
+        "useInlineDiffs": false,
+        "code": true
+      },
+      "version": "7.1.3"
+    },
+    "marge": {
+      "options": null,
+      "version": "6.2.0"
+    }
+  }
+}
