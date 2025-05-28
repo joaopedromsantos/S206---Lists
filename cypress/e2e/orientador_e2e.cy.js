@@ -8,9 +8,10 @@ describe("Testes E2E - Orientador", () => {
     const nomeFinal = `${nomeBase} ${numeroAleatorio}`;
     const email = nomeFinal.toLowerCase().replace(/\s+/g, '') + "@inatel.br";
     const senha = "123456";
+    const tipoUsuario = 'Orientador';
 
-    acessarPaginaCadastro();
-    preencherFormulario(nomeFinal, email, senha);
+    cy.acessarPaginaCadastro();
+    cy.preencherFormulario(tipoUsuario, nomeFinal, email, senha);
 
     cy.get('.Toastify__toast-body > :nth-child(2)').should("contain.text", "Usuário criado com sucesso!");
   });
@@ -19,9 +20,10 @@ describe("Testes E2E - Orientador", () => {
     const nome = "Dr. Marvin";
     const email = "marvin.inatel.br"; // sem '@'
     const senha = "123456";
+    const tipoUsuario = 'Orientador';
 
-    acessarPaginaCadastroOrientador();
-    preencherFormularioOrientador(nome, email, senha);
+    cy.acessarPaginaCadastro();
+    cy.preencherFormulario(tipoUsuario, nome, email, senha);
 
     cy.get('.Toastify__toast-body > :nth-child(2)').should("contain.text", "Por favor, insira um endereço de email válido.");
   });
@@ -32,26 +34,14 @@ describe("Testes E2E - Orientador", () => {
     const nomeFinal = `${nomeBase} ${numeroAleatorio}`;
     const email = nomeFinal.toLowerCase().replace(/\s+/g, '') + "@inatel.br";
     const senha = "123456";
+    const tipoUsuario = 'Orientador';
 
-    acessarPaginaCadastroOrientador();
-    preencherFormularioOrientador(nomeFinal, email, senha);
+    cy.acessarPaginaCadastro();
+    cy.preencherFormulario(tipoUsuario, nomeFinal, email, senha);
     cy.get('.Toastify__toast-body > :nth-child(2)').should("contain.text", "Usuário criado com sucesso!");
 
-    acessarPaginaCadastroOrientador();
-    preencherFormularioOrientador(nomeFinal, email, senha);
+    cy.acessarPaginaCadastro();
+    cy.preencherFormulario(tipoUsuario, nomeFinal, email, senha);
     cy.get('.Toastify__toast-body > :nth-child(2)').should("contain.text", "Falha ao criar usuário");
   });
 });
-
-function acessarPaginaCadastro() {
-  login();    
-  cy.get('[href="/adm/novo-usuario"]').click();
-}
-
-function preencherFormulario(nome, email, senha) {
-  cy.get('.sc-dsAqUS').select('Aluno');
-  if (nome !== "") cy.get(':nth-child(1) > .sc-bqOYya > .sc-gHjVMF').type(nome);
-  if (email !== "") cy.get(':nth-child(2) > .sc-bqOYya > .sc-gHjVMF').type(email);
-  if (senha !== "") cy.get(':nth-child(3) > .sc-bqOYya > .sc-gHjVMF').type(senha);
-  cy.get(':nth-child(4) > .sc-irLvIq > .sc-csKJxZ').click();
-}
