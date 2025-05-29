@@ -1,6 +1,6 @@
 /// <reference types="cypress" />
 
-describe("Testes de Alunos", () => {
+describe("Testes E2E - Alunos", () => {
 
   it("Teste positivo - criação de alunos manualmente com sucesso (CREATE)", () => {
     const nomeBase = "Arthur Morgan";

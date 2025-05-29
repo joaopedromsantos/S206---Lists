@@ -1,0 +1,195 @@
+{
+  "stats": {
+    "suites": 1,
+    "tests": 6,
+    "passes": 6,
+    "pending": 0,
+    "failures": 0,
+    "start": "2025-05-29T02:52:17.666Z",
+    "end": "2025-05-29T02:52:57.067Z",
+    "duration": 39401,
+    "testsRegistered": 6,
+    "passPercent": 100,
+    "pendingPercent": 0,
+    "other": 0,
+    "hasOther": false,
+    "skipped": 0,
+    "hasSkipped": false
+  },
+  "results": [
+    {
+      "uuid": "93a8b9e4-607f-4f86-95e6-2eef07836b56",
+      "title": "",
+      "fullFile": "cypress\\e2e\\orientador_e2e.cy.js",
+      "file": "cypress\\e2e\\orientador_e2e.cy.js",
+      "beforeHooks": [],
+      "afterHooks": [],
+      "tests": [],
+      "suites": [
+        {
+          "uuid": "f76e50d3-9b19-4829-82d8-2c271b6650d6",
+          "title": "Testes E2E - Orientador",
+          "fullFile": "",
+          "file": "",
+          "beforeHooks": [],
+          "afterHooks": [],
+          "tests": [
+            {
+              "title": "Teste positivo - Criação de orientador com sucesso (CREATE)",
+              "fullTitle": "Testes E2E - Orientador Teste positivo - Criação de orientador com sucesso (CREATE)",
+              "timedOut": null,
+              "duration": 7083,
+              "state": "passed",
+              "speed": "medium",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "const nomeBase = \"Dra. Ellen Page\";\nconst numeroAleatorio = Math.floor(Math.random() * 10001);\nconst nomeFinal = `${nomeBase} ${numeroAleatorio}`;\nconst email = nomeFinal.toLowerCase().replace(/\\s+/g, '') + \"@inatel.br\";\nconst senha = \"123456\";\nconst tipoUsuario = 'Orientador';\ncy.acessarPaginaCadastro();\ncy.preencherFormulario(tipoUsuario, nomeFinal, email, senha);\ncy.get('.Toastify__toast-body > :nth-child(2)').should(\"contain.text\", \"Usuário criado com sucesso!\");",
+              "err": {},
+              "uuid": "923019ae-2735-4013-9474-9804ea536ae9",
+              "parentUUID": "f76e50d3-9b19-4829-82d8-2c271b6650d6",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "Teste negativo - Email inválido (sem @)",
+              "fullTitle": "Testes E2E - Orientador Teste negativo - Email inválido (sem @)",
+              "timedOut": null,
+              "duration": 4184,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "const nome = \"Dr. Marvin\";\nconst email = \"marvin.inatel.br\"; // sem '@'\nconst senha = \"123456\";\nconst tipoUsuario = 'Orientador';\ncy.acessarPaginaCadastro();\ncy.preencherFormulario(tipoUsuario, nome, email, senha);\ncy.get('.Toastify__toast-body > :nth-child(2)').should(\"contain.text\", \"Por favor, insira um endereço de email válido.\");",
+              "err": {},
+              "uuid": "a8876c74-a838-42d9-9a9f-5516ef8830a8",
+              "parentUUID": "f76e50d3-9b19-4829-82d8-2c271b6650d6",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "Teste negativo - Email duplicado",
+              "fullTitle": "Testes E2E - Orientador Teste negativo - Email duplicado",
+              "timedOut": null,
+              "duration": 6900,
+              "state": "passed",
+              "speed": "medium",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "const nomeBase = \"Dr. House\";\nconst numeroAleatorio = Math.floor(Math.random() * 10001);\nconst nomeFinal = `${nomeBase} ${numeroAleatorio}`;\nconst email = nomeFinal.toLowerCase().replace(/\\s+/g, '') + \"@inatel.br\";\nconst senha = \"123456\";\nconst tipoUsuario = 'Orientador';\ncy.acessarPaginaCadastro();\ncy.preencherFormulario(tipoUsuario, nomeFinal, email, senha);\ncy.get('.Toastify__toast-body > :nth-child(2)').should(\"contain.text\", \"Usuário criado com sucesso!\");\ncy.get('[href=\"/adm/projetos\"]').click();\ncy.get('[href=\"/adm/novo-usuario\"]').click();\ncy.preencherFormulario(tipoUsuario, nomeFinal, email, senha);\ncy.get('.Toastify__toast-body > :nth-child(2)').should(\"contain.text\", \"Falha ao criar usuário\");",
+              "err": {},
+              "uuid": "f4b609c3-96eb-4483-9da2-c1ddaabc30cf",
+              "parentUUID": "f76e50d3-9b19-4829-82d8-2c271b6650d6",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "Teste positivo - Criação de orientador com nome acentuado",
+              "fullTitle": "Testes E2E - Orientador Teste positivo - Criação de orientador com nome acentuado",
+              "timedOut": null,
+              "duration": 5557,
+              "state": "passed",
+              "speed": "medium",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "const nomeBase = \"André Do Grau\";\nconst numeroAleatorio = Math.floor(Math.random() * 10001);\nconst nomeFinal = nomeBase + numeroAleatorio;\nconst email = nomeFinal.toLowerCase().replace(/\\s+/g, '').normalize(\"NFD\").replace(/[\\u0300-\\u036f]/g, \"\") + \"@inatel.br\";\nconst senha = \"123456\";\nconst tipoUsuario = 'Orientador';\ncy.acessarPaginaCadastro();\ncy.preencherFormulario(tipoUsuario, nomeFinal, email, senha);\ncy.get('.Toastify__toast-body > :nth-child(2)').should(\"contain.text\", \"Usuário criado com sucesso!\");",
+              "err": {},
+              "uuid": "685ded81-fd46-442c-a4b1-e10dde4d84a8",
+              "parentUUID": "f76e50d3-9b19-4829-82d8-2c271b6650d6",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "Teste que era pra ser negativo, mas o site deixa - Criação de orientador que antes era aluno (mesmas credenciais)",
+              "fullTitle": "Testes E2E - Orientador Teste que era pra ser negativo, mas o site deixa - Criação de orientador que antes era aluno (mesmas credenciais)",
+              "timedOut": null,
+              "duration": 7051,
+              "state": "passed",
+              "speed": "medium",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "const nomeBase = \"Joninhas\";\nconst numeroAleatorio = Math.floor(Math.random() * 10001);\nconst nomeFinal = `${nomeBase} ${numeroAleatorio}`;\nconst email = nomeFinal.toLowerCase().replace(/\\s+/g, '') + \"@inatel.br\";\nconst senha = \"123456\";\nconst tipoUsuario = 'Orientador';\ncy.acessarPaginaCadastro();\ncy.preencherFormulario(\"Aluno\", nomeFinal, email, senha);\ncy.get('.Toastify__toast-body > :nth-child(2)').should(\"contain.text\", \"Usuário criado com sucesso!\");\ncy.get('[href=\"/adm/projetos\"]').click();\ncy.get('[href=\"/adm/novo-usuario\"]').click();\ncy.preencherFormulario(tipoUsuario, nomeFinal, email, senha);\ncy.get('.Toastify__toast-body > :nth-child(2)').should(\"contain.text\", \"Usuário criado com sucesso\");",
+              "err": {},
+              "uuid": "c904b01a-ce7f-4bd6-8441-1fc53b26279d",
+              "parentUUID": "f76e50d3-9b19-4829-82d8-2c271b6650d6",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "Teste positivo - Começar a preencher as credencias, clicar na opção de Selecione, e voltar pro Orientador e estar com as informações salvas",
+              "fullTitle": "Testes E2E - Orientador Teste positivo - Começar a preencher as credencias, clicar na opção de Selecione, e voltar pro Orientador e estar com as informações salvas",
+              "timedOut": null,
+              "duration": 4651,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "const nomeBase = \"Joninhas\";\nconst numeroAleatorio = Math.floor(Math.random() * 10001);\nconst nomeFinal = `${nomeBase} ${numeroAleatorio}`;\nconst email = nomeFinal.toLowerCase().replace(/\\s+/g, '') + \"@inatel.br\";\nconst senha = \"123456\";\nconst tipoUsuario = 'Orientador';\ncy.acessarPaginaCadastro();\ncy.preencherFormulario_alternativo(tipoUsuario, nomeFinal, email, senha);\ncy.get('.sc-dsAqUS').select(\"Selecione...\");\ncy.get('.sc-dsAqUS').select(\"Orientador\");\ncy.get(':nth-child(4) > .sc-irLvIq > .sc-csKJxZ').click();\ncy.get('.Toastify__toast-body > :nth-child(2)').should(\"contain.text\", \"Usuário criado com sucesso\");",
+              "err": {},
+              "uuid": "a6b2cb2f-a05d-4f0f-8f91-597710dbb35e",
+              "parentUUID": "f76e50d3-9b19-4829-82d8-2c271b6650d6",
+              "isHook": false,
+              "skipped": false
+            }
+          ],
+          "suites": [],
+          "passes": [
+            "923019ae-2735-4013-9474-9804ea536ae9",
+            "a8876c74-a838-42d9-9a9f-5516ef8830a8",
+            "f4b609c3-96eb-4483-9da2-c1ddaabc30cf",
+            "685ded81-fd46-442c-a4b1-e10dde4d84a8",
+            "c904b01a-ce7f-4bd6-8441-1fc53b26279d",
+            "a6b2cb2f-a05d-4f0f-8f91-597710dbb35e"
+          ],
+          "failures": [],
+          "pending": [],
+          "skipped": [],
+          "duration": 35426,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 2000
+        }
+      ],
+      "passes": [],
+      "failures": [],
+      "pending": [],
+      "skipped": [],
+      "duration": 0,
+      "root": true,
+      "rootEmpty": true,
+      "_timeout": 2000
+    }
+  ],
+  "meta": {
+    "mocha": {
+      "version": "7.2.0"
+    },
+    "mochawesome": {
+      "options": {
+        "quiet": false,
+        "reportFilename": "mochawesome",
+        "saveHtml": true,
+        "saveJson": true,
+        "consoleReporter": "spec",
+        "useInlineDiffs": false,
+        "code": true
+      },
+      "version": "7.1.3"
+    },
+    "marge": {
+      "options": null,
+      "version": "6.2.0"
+    }
+  }
+}

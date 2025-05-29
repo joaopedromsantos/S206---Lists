@@ -1,0 +1,195 @@
+{
+  "stats": {
+    "suites": 1,
+    "tests": 6,
+    "passes": 6,
+    "pending": 0,
+    "failures": 0,
+    "start": "2025-05-29T02:54:12.233Z",
+    "end": "2025-05-29T02:54:44.418Z",
+    "duration": 32185,
+    "testsRegistered": 6,
+    "passPercent": 100,
+    "pendingPercent": 0,
+    "other": 0,
+    "hasOther": false,
+    "skipped": 0,
+    "hasSkipped": false
+  },
+  "results": [
+    {
+      "uuid": "929dac8e-8e20-4302-9844-b7d8bbf5228d",
+      "title": "",
+      "fullFile": "cypress\\e2e\\alunos_e2e.cy.js",
+      "file": "cypress\\e2e\\alunos_e2e.cy.js",
+      "beforeHooks": [],
+      "afterHooks": [],
+      "tests": [],
+      "suites": [
+        {
+          "uuid": "71074195-234d-43d6-8aad-23f4ef265168",
+          "title": "Testes E2E - Alunos",
+          "fullFile": "",
+          "file": "",
+          "beforeHooks": [],
+          "afterHooks": [],
+          "tests": [
+            {
+              "title": "Teste positivo - criação de alunos manualmente com sucesso (CREATE)",
+              "fullTitle": "Testes E2E - Alunos Teste positivo - criação de alunos manualmente com sucesso (CREATE)",
+              "timedOut": null,
+              "duration": 6611,
+              "state": "passed",
+              "speed": "medium",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "const nomeBase = \"Arthur Morgan\";\nconst numeroAleatorio = Math.floor(Math.random() * 10001);\nconst nomeFinal = nomeBase + numeroAleatorio;\nconst email = nomeFinal.toLowerCase().replace(/\\s+/g, '') + \"@inatel.br\";\nconst senha = \"123456\";\nconst tipoUsuario = 'Aluno';\ncy.acessarPaginaCadastro();\ncy.preencherFormulario(tipoUsuario, nomeFinal, email, senha);\ncy.get('.Toastify__toast-body > :nth-child(2)').should(\"contain.text\", \"Usuário criado com sucesso!\");",
+              "err": {},
+              "uuid": "2d20e699-6780-4b94-b947-c60f6d0bc4d5",
+              "parentUUID": "71074195-234d-43d6-8aad-23f4ef265168",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "Teste negativo - Criação com email inapropriado - sem @",
+              "fullTitle": "Testes E2E - Alunos Teste negativo - Criação com email inapropriado - sem @",
+              "timedOut": null,
+              "duration": 4068,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "const nomeBase = \"Arthur Morgan\";\nconst email = \"arthur.morgan.inatel.br\"; // Email sem '@'\nconst senha = \"123456\";\nconst tipoUsuario = 'Aluno';\ncy.acessarPaginaCadastro();\ncy.preencherFormulario(tipoUsuario, nomeBase, email, senha);\ncy.get('.Toastify__toast-body > :nth-child(2)').should(\"contain.text\", \"Por favor, insira um endereço de email válido.\");",
+              "err": {},
+              "uuid": "a113119b-0880-47e5-9a20-4e30e32f1c0f",
+              "parentUUID": "71074195-234d-43d6-8aad-23f4ef265168",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "Teste negativo - Criação com email repetido",
+              "fullTitle": "Testes E2E - Alunos Teste negativo - Criação com email repetido",
+              "timedOut": null,
+              "duration": 4936,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "const nomeBase = \"Arthur Morgan\";\nconst numeroAleatorio = Math.floor(Math.random() * 10001);\nconst nomeFinal = nomeBase + numeroAleatorio;\nconst email = nomeFinal.toLowerCase().replace(/\\s+/g, '') + \"@inatel.br\";\nconst senha = \"123456\";\nconst tipoUsuario = 'Aluno';\ncy.acessarPaginaCadastro();\ncy.preencherFormulario(tipoUsuario, nomeFinal, email, senha);\ncy.get('.Toastify__toast-body > :nth-child(2)').should(\"contain.text\", \"Usuário criado com sucesso!\");\n// Tentativa de criar o mesmo usuário novamente\ncy.get(':nth-child(4) > .sc-irLvIq > .sc-csKJxZ').click();\ncy.get('.Toastify__toast-body > :nth-child(2)').should(\"contain.text\", \"Falha ao criar usuário\");",
+              "err": {},
+              "uuid": "52d93e57-637d-451a-bcb6-aa4829b88cf2",
+              "parentUUID": "71074195-234d-43d6-8aad-23f4ef265168",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "Teste positivo - Criação de aluno com nome acentuado",
+              "fullTitle": "Testes E2E - Alunos Teste positivo - Criação de aluno com nome acentuado",
+              "timedOut": null,
+              "duration": 4934,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "const nomeBase = \"José da Silva\";\nconst numeroAleatorio = Math.floor(Math.random() * 10001);\nconst nomeFinal = nomeBase + numeroAleatorio;\nconst email = nomeFinal.toLowerCase().replace(/\\s+/g, '').normalize(\"NFD\").replace(/[\\u0300-\\u036f]/g, \"\") + \"@inatel.br\";\nconst senha = \"123456\";\nconst tipoUsuario = 'Aluno';\ncy.acessarPaginaCadastro();\ncy.preencherFormulario(tipoUsuario, nomeFinal, email, senha);\ncy.get('.Toastify__toast-body > :nth-child(2)').should(\"contain.text\", \"Usuário criado com sucesso!\");",
+              "err": {},
+              "uuid": "b65b2ee9-85f2-4874-8ad7-1d39755fdf99",
+              "parentUUID": "71074195-234d-43d6-8aad-23f4ef265168",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "Teste negativo - Criação de aluno com senha vazia",
+              "fullTitle": "Testes E2E - Alunos Teste negativo - Criação de aluno com senha vazia",
+              "timedOut": null,
+              "duration": 4160,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "const nomeBase = \"Maria Clara\";\nconst numeroAleatorio = Math.floor(Math.random() * 10001);\nconst nomeFinal = nomeBase + numeroAleatorio;\nconst email = nomeFinal.toLowerCase().replace(/\\s+/g, '') + \"@inatel.br\";\ncy.acessarPaginaCadastro();\ncy.get('.sc-dsAqUS').select('Aluno');\ncy.get(':nth-child(1) > .sc-bqOYya > .sc-gHjVMF').type(nomeBase);\ncy.get(':nth-child(2) > .sc-bqOYya > .sc-gHjVMF').type(email);\n// não digita a senha\ncy.get(':nth-child(4) > .sc-irLvIq > .sc-csKJxZ').click();\n// Verifica se ainda está na página de criação (não foi redirecionado)\ncy.url().should(\"include\", \"/novo-usuario\");",
+              "err": {},
+              "uuid": "ec40024b-8d37-4108-a8e1-221010748e15",
+              "parentUUID": "71074195-234d-43d6-8aad-23f4ef265168",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "Teste negativo - Criação de aluno com nome vazio",
+              "fullTitle": "Testes E2E - Alunos Teste negativo - Criação de aluno com nome vazio",
+              "timedOut": null,
+              "duration": 3838,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "const email = \"aluno_teste_\" + Math.floor(Math.random() * 10000) + \"@inatel.br\";\nconst senha = \"123456\";\ncy.acessarPaginaCadastro();\ncy.get('.sc-dsAqUS').select('Aluno');\n// não digita o nome\ncy.get(':nth-child(2) > .sc-bqOYya > .sc-gHjVMF').type(email);\ncy.get(':nth-child(3) > .sc-bqOYya > .sc-gHjVMF').type(senha);\ncy.get(':nth-child(4) > .sc-irLvIq > .sc-csKJxZ').click();\n// Verifica se ainda está na página de criação (não foi redirecionado)\ncy.url().should(\"include\", \"/novo-usuario\");",
+              "err": {},
+              "uuid": "e9d1680c-4811-4f90-aeda-b7622c1ff9ba",
+              "parentUUID": "71074195-234d-43d6-8aad-23f4ef265168",
+              "isHook": false,
+              "skipped": false
+            }
+          ],
+          "suites": [],
+          "passes": [
+            "2d20e699-6780-4b94-b947-c60f6d0bc4d5",
+            "a113119b-0880-47e5-9a20-4e30e32f1c0f",
+            "52d93e57-637d-451a-bcb6-aa4829b88cf2",
+            "b65b2ee9-85f2-4874-8ad7-1d39755fdf99",
+            "ec40024b-8d37-4108-a8e1-221010748e15",
+            "e9d1680c-4811-4f90-aeda-b7622c1ff9ba"
+          ],
+          "failures": [],
+          "pending": [],
+          "skipped": [],
+          "duration": 28547,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 2000
+        }
+      ],
+      "passes": [],
+      "failures": [],
+      "pending": [],
+      "skipped": [],
+      "duration": 0,
+      "root": true,
+      "rootEmpty": true,
+      "_timeout": 2000
+    }
+  ],
+  "meta": {
+    "mocha": {
+      "version": "7.2.0"
+    },
+    "mochawesome": {
+      "options": {
+        "quiet": false,
+        "reportFilename": "mochawesome",
+        "saveHtml": true,
+        "saveJson": true,
+        "consoleReporter": "spec",
+        "useInlineDiffs": false,
+        "code": true
+      },
+      "version": "7.1.3"
+    },
+    "marge": {
+      "options": null,
+      "version": "6.2.0"
+    }
+  }
+}

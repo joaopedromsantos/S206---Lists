@@ -1,14 +1,14 @@
 /// <reference types="cypress" />
 
-describe("Testes da página de projetos", () => {
+describe("Testes E2E - Projetos", () => {
 
-  it("Teste de criação de projeto manualmente com sucesso (CREATE)", () => {
+  it("Teste positivo - Criação de projeto manualmente com sucesso (CREATE)", () => {
 
     const nomeBase = "Relógio do Ben 10 ";
     const numeroAleatorio = Math.floor(Math.random() * 10001) * Math.floor(Math.random() * 10001); 
     const nomeFinal = nomeBase + numeroAleatorio;
 
-    login(); 
+    cy.login();
 
     cy.get('.sc-jdHILj').click();
     cy.get('[href="/adm/add-projeto/cadastro"]').click();
@@ -25,13 +25,11 @@ describe("Testes da página de projetos", () => {
 
   });
 
-  beforeEach(() => {
+
+  it("Teste positivo - buscar o projeto inserido e clicar nele com sucesso (READ)", () => {
     criarProjeto();
 
     cy.login();
-  });
-
-  it("Teste de buscar o projeto inserido e clicar nele com sucesso (READ)", () => {
 
     const nomeFinal = Cypress.env('nomeProjeto');
 
@@ -41,14 +39,17 @@ describe("Testes da página de projetos", () => {
 
   });
 
-  it("Teste de inserir um aluno extra no projeto (UPDATE)", () => {
+  it("Teste positivo - inserir um aluno extra no projeto (UPDATE)", () => {
+    criarProjeto();
 
+    cy.login();
     const nomeFinal = Cypress.env('nomeProjeto');
 
     cy.get('.sc-ckdEwu').type(nomeFinal);
     cy.get('.sc-gjLLEI').click();
     cy.get('.sc-cPtzlb > .sc-irLvIq > .sc-csKJxZ').click();
     cy.get('.sc-ppzwM').type("fonseca@inatel.br");
+    cy.get('.sc-ldgOGP').select("Integrante 3")
     cy.get('.sc-hiTDLB').click();
     cy.get('.iTLMzn > .sc-csKJxZ').click();
     cy.get('.Toastify__toast-body > :nth-child(2)').should("contain.text", "Projeto atualizado com sucesso!");
@@ -57,14 +58,17 @@ describe("Testes da página de projetos", () => {
 
   });
 
-  it("Teste de inserir um aluno extra no projeto (UPDATE) que já está no projeto (ERRO)", () => {
+  it("Teste negativo - inserir um aluno extra no projeto (UPDATE) que já está no projeto (ERRO)", () => {
+    criarProjeto();
 
+    cy.login();
     const nomeFinal = Cypress.env('nomeProjeto');
 
     cy.get('.sc-ckdEwu').type(nomeFinal);
     cy.get('.sc-gjLLEI').click();
     cy.get('.sc-cPtzlb > .sc-irLvIq > .sc-csKJxZ').click();
     cy.get('.sc-ppzwM').type("pizzonin@inatel.br");
+    cy.get('.sc-ldgOGP').select("Integrante 3")
     cy.get('.sc-hiTDLB').click();
     cy.wait(500);
     cy.get('.iTLMzn > .sc-csKJxZ').click();
@@ -72,27 +76,37 @@ describe("Testes da página de projetos", () => {
 
   });
 
-  it("Teste de deletar o projeto inserido com sucesso (DELETE)", () => {
+  it("Teste positivo - deletar o projeto inserido com sucesso (DELETE)", () => {
+    criarProjeto();
 
+    cy.login();
     const nomeFinal = Cypress.env('nomeProjeto');
 
     cy.get('.sc-ckdEwu').type(nomeFinal);
     cy.get('.sc-gjLLEI').click();
-    cy.get('.sc-iCKXBC > [viewBox="0 0 448 512"] > path').click();
+    cy.wait(500);
+    cy.get('.sc-iCKXBC > [viewBox="0 0 448 512"]').click();
     cy.wait(500);
     cy.get('.sc-cZpZpK > :nth-child(1)').click();
 
   });
 
-  it("Teste de buscar o projeto inserido, mudar o nome e depois pesquisar ele novamente com sucesso(READ)", () => {
+  it("Teste positivo - buscar o projeto inserido, mudar o nome e depois pesquisar ele novamente com sucesso(READ)", () => {
+    criarProjeto();
+
+    cy.login();
 
     const nomeFinal = Cypress.env('nomeProjeto');
 
     cy.get('.sc-ckdEwu').type(nomeFinal);
     cy.get('.sc-gjLLEI').click();
+    cy.wait(500);
     cy.get('.sc-iCKXBC > [viewBox="0 0 576 512"]').click();
+    cy.wait(500);
     cy.get('.sc-iVheDh').clear()
+    cy.wait(500);
     cy.get('.sc-iVheDh').type(nomeFinal + " - Atualizado");
+    cy.wait(500)
     cy.get('.sc-iCKXBC> [viewBox="0 0 448 512"]').click();
     cy.get('.iTLMzn > .sc-csKJxZ').click();
     cy.get('.Toastify__toast-body > :nth-child(2)').should("contain.text", "Projeto atualizado com sucesso!");
@@ -100,6 +114,9 @@ describe("Testes da página de projetos", () => {
     cy.get('.sc-ckdEwu').type(nomeFinal + " - Atualizado");
     cy.get('.sc-gjLLEI').click();
   });
+
+
+
   
 });
 
@@ -112,8 +129,8 @@ function criarProjeto() {
 
   Cypress.env('nomeProjeto', nomeFinal);
 
-  login();
-
+  cy.login();
+  
   cy.get('.sc-jdHILj').click();
   cy.get('[href="/adm/add-projeto/cadastro"]').click();
   cy.get('.sc-fYrVWQ > .sc-hsaIUA').type(nomeFinal);
