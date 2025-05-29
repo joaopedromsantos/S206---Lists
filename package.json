@@ -1,6 +1,18 @@
 {
   "dependencies": {
-    "cypress": "^14.4.0",
     "cypress-mochawesome-reporter": "^3.8.2"
+  },
+  "name": "s206---lists",
+  "description": "��#\u0000 \u0000S\u00002\u00000\u00006\u0000-\u0000-\u0000-\u0000L\u0000i\u0000s\u0000t\u0000s\u0000\r\u0000 \u0000",
+  "version": "1.0.0",
+  "main": "cypress.config.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "cypress": "^14.4.0"
   }
 }
