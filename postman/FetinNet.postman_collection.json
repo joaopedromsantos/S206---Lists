@@ -1,0 +1,204 @@
+{
+	"info": {
+		"_postman_id": "fb7b8978-ee83-4169-bbfd-689ca7fbb92b",
+		"name": "FetinNet",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "46035184",
+		"_collection_link": "https://davirosim.postman.co/workspace/DaviRosim's-Workspace~480a53d3-77b9-4c50-8609-6212485fdbd0/collection/46035184-fb7b8978-ee83-4169-bbfd-689ca7fbb92b?action=share&source=collection_link&creator=46035184"
+	},
+	"item": [
+		{
+			"name": "Alunos",
+			"item": [
+				{
+					"name": "Get Token",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let response = pm.response.json();",
+									"pm.environment.set('Cookie', response.token);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BaseURL}}get-csrf-token",
+							"host": [
+								"{{BaseURL}}get-csrf-token"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function(){",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "X-XSRF-TOKEN",
+								"value": "{{Cookie}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"username\" : \"pizz@\",\n    \"password\" : \"123\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BaseURL}}login",
+							"host": [
+								"{{BaseURL}}login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Todos os Alunos",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Recebe um array de alunos\", function () {",
+									"    const jsonData = pm.response.json();",
+									"    pm.expect(jsonData).to.be.an(\"array\");",
+									"    if (jsonData.length > 0) {",
+									"        pm.expect(jsonData[0]).to.have.property(\"nome\");",
+									"    }",
+									"});",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BaseURL}}api/v1/Aluno/all",
+							"host": [
+								"{{BaseURL}}api"
+							],
+							"path": [
+								"v1",
+								"Aluno",
+								"all"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Aluno inexistente",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Acesso negado para deletar aluno\", function () {",
+									"    pm.response.to.have.status(403);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{BaseURL}}api/v1/Aluno/delete/?email=emailinexistente@gmail.com",
+							"host": [
+								"{{BaseURL}}api"
+							],
+							"path": [
+								"v1",
+								"Aluno",
+								"delete",
+								""
+							],
+							"query": [
+								{
+									"key": "email",
+									"value": "emailinexistente@gmail.com"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add invalido",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Email inexistente no DB\", function () {",
+									"    pm.response.to.have.status(404);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BaseURL}}api/v1/Aluno/get/?email=emailinexistente@gmail.com",
+							"host": [
+								"{{BaseURL}}api"
+							],
+							"path": [
+								"v1",
+								"Aluno",
+								"get",
+								""
+							],
+							"query": [
+								{
+									"key": "email",
+									"value": "emailinexistente@gmail.com"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
