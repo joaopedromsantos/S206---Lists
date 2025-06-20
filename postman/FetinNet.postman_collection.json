@@ -1,10 +1,9 @@
 {
 	"info": {
-		"_postman_id": "fb7b8978-ee83-4169-bbfd-689ca7fbb92b",
+		"_postman_id": "9753a9b6-9d8b-4011-9d75-feabaadb31e6",
 		"name": "FetinNet",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "46035184",
-		"_collection_link": "https://davirosim.postman.co/workspace/DaviRosim's-Workspace~480a53d3-77b9-4c50-8609-6212485fdbd0/collection/46035184-fb7b8978-ee83-4169-bbfd-689ca7fbb92b?action=share&source=collection_link&creator=46035184"
+		"_exporter_id": "35951080"
 	},
 	"item": [
 		{
@@ -119,14 +118,17 @@
 					"response": []
 				},
 				{
-					"name": "Aluno inexistente",
+					"name": "Get invalido",
 					"event": [
 						{
 							"listen": "test",
 							"script": {
 								"exec": [
-									"pm.test(\"Acesso negado para deletar aluno\", function () {",
-									"    pm.response.to.have.status(403);",
+									"pm.test(\"Email inexistente no DB\", function () {",
+									"    pm.response.to.have.status(404);",
+									"",
+									"    const jsonData = pm.response.json();",
+									"    pm.expect(jsonData).to.have.property(\"error\", \"Not Found\");",
 									"});"
 								],
 								"type": "text/javascript",
@@ -135,8 +137,158 @@
 						}
 					],
 					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "X-XSRF-TOKEN",
+								"value": "{{Cookie}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{BaseURL}}api/v1/Aluno/get/?email=emailinexistente@gmail.com",
+							"host": [
+								"{{BaseURL}}api"
+							],
+							"path": [
+								"v1",
+								"Aluno",
+								"get",
+								""
+							],
+							"query": [
+								{
+									"key": "email",
+									"value": "emailinexistente@gmail.com"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Campo faltando",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"const addAlunoUrl = pm.environment.get(\"BaseURL\") + \"api/v1/Aluno/add\";\r",
+									"\r",
+									"// Dados obrigatórios do aluno\r",
+									"const aluno = {\r",
+									"  email: \"joao.teste@fetin.com\",\r",
+									"  nome: \"João Teste\",\r",
+									"  password: \"senha123\",\r",
+									"  acesso: \"ROLE_USER\",\r",
+									"  ativo: 0\r",
+									"};\r",
+									"\r",
+									"// Faz o POST para criar o aluno antes da exclusão\r",
+									"pm.sendRequest({\r",
+									"  url: addAlunoUrl,\r",
+									"  method: \"POST\",\r",
+									"  header: {\r",
+									"    \"Content-Type\": \"application/json\",\r",
+									"    \"X-XSRF-TOKEN\": pm.environment.get(\"Cookie\")\r",
+									"  },\r",
+									"  body: {\r",
+									"    mode: \"raw\",\r",
+									"    raw: JSON.stringify(aluno)\r",
+									"  }\r",
+									"}, function (err, res) {\r",
+									"  if (err) {\r",
+									"    console.log(\"Erro ao criar aluno antes do DELETE:\", err);\r",
+									"  } else {\r",
+									"    console.log(\"Aluno criado com sucesso antes do DELETE.\");\r",
+									"  }\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Faltando campo de email para retornar o projeto do aluno\", function () {\r",
+									"    pm.response.to.have.status(406);\r",
+									"    const jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData).to.have.property(\"error\", \"Um email deve ser enviado\");\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "X-XSRF-TOKEN",
+								"value": "{{Cookie}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BaseURL}}api/v1/Aluno/projects",
+							"host": [
+								"{{BaseURL}}api"
+							],
+							"path": [
+								"v1",
+								"Aluno",
+								"projects"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Aluno inexistente",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Respota negativa de aluno encontrado\", function () {",
+									"    pm.response.to.have.status(404);",
+									"",
+									"    const jsonData = pm.response.json();",
+									"    pm.expect(jsonData).to.have.property(\"error\", \"Not Found\");",
+									"});",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
 						"method": "DELETE",
-						"header": [],
+						"header": [
+							{
+								"key": "X-XSRF-TOKEN",
+								"value": "{{Cookie}}",
+								"type": "text"
+							}
+						],
 						"url": {
 							"raw": "{{BaseURL}}api/v1/Aluno/delete/?email=emailinexistente@gmail.com",
 							"host": [
@@ -159,15 +311,19 @@
 					"response": []
 				},
 				{
-					"name": "Add invalido",
+					"name": "Aluno inexistente",
 					"event": [
 						{
 							"listen": "test",
 							"script": {
 								"exec": [
-									"pm.test(\"Email inexistente no DB\", function () {",
-									"    pm.response.to.have.status(404);",
-									"});"
+									"pm.test(\"Aluno não encontrado para atualizar\", function () {\r",
+									"    pm.response.to.have.status(404);\r",
+									"\r",
+									"    const jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData).to.have.property(\"error\", \"Not Found\");\r",
+									"});\r",
+									""
 								],
 								"type": "text/javascript",
 								"packages": {}
@@ -175,17 +331,32 @@
 						}
 					],
 					"request": {
-						"method": "GET",
-						"header": [],
+						"method": "PUT",
+						"header": [
+							{
+								"key": "X-XSRF-TOKEN",
+								"value": "{{Cookie}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
 						"url": {
-							"raw": "{{BaseURL}}api/v1/Aluno/get/?email=emailinexistente@gmail.com",
+							"raw": "{{BaseURL}}api/v1/Aluno/update/?email=emailinexistente@gmail.com",
 							"host": [
 								"{{BaseURL}}api"
 							],
 							"path": [
 								"v1",
 								"Aluno",
-								"get",
+								"update",
 								""
 							],
 							"query": [
@@ -193,6 +364,98 @@
 									"key": "email",
 									"value": "emailinexistente@gmail.com"
 								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Aluno já cadastrado",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"const addAlunoUrl = pm.environment.get(\"BaseURL\") + \"api/v1/Aluno/add\";\r",
+									"\r",
+									"// Dados obrigatórios do aluno\r",
+									"const aluno = {\r",
+									"  email: \"joao.teste@fetin.com\",\r",
+									"  nome: \"João Teste\",\r",
+									"  password: \"senha123\",\r",
+									"  acesso: \"ROLE_USER\",\r",
+									"  ativo: 0\r",
+									"};\r",
+									"\r",
+									"// Faz o POST para criar o aluno antes da exclusão\r",
+									"pm.sendRequest({\r",
+									"  url: addAlunoUrl,\r",
+									"  method: \"POST\",\r",
+									"  header: {\r",
+									"    \"Content-Type\": \"application/json\",\r",
+									"    \"X-XSRF-TOKEN\": pm.environment.get(\"Cookie\")\r",
+									"  },\r",
+									"  body: {\r",
+									"    mode: \"raw\",\r",
+									"    raw: JSON.stringify(aluno)\r",
+									"  }\r",
+									"}, function (err, res) {\r",
+									"  if (err) {\r",
+									"    console.log(\"Erro ao criar aluno antes do DELETE:\", err);\r",
+									"  } else {\r",
+									"    console.log(\"Aluno criado com sucesso antes do DELETE.\");\r",
+									"  }\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Aluno já cadastrado\", function () {\r",
+									"    pm.response.to.have.status(406);\r",
+									"\r",
+									"    const jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData).to.have.property(\"detail\", \"Aluno já cadastrado\");\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "X-XSRF-TOKEN",
+								"value": "{{Cookie}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"joao.teste@fetin.com\",\r\n    \"nome\": \"João Teste\",\r\n    \"password\": \"senha123\",\r\n    \"acesso\": \"ROLE_USER\",\r\n    \"ativo\": 0\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BaseURL}}api/v1/Aluno/add",
+							"host": [
+								"{{BaseURL}}api"
+							],
+							"path": [
+								"v1",
+								"Aluno",
+								"add"
 							]
 						}
 					},
