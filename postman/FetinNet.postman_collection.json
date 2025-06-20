@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "9753a9b6-9d8b-4011-9d75-feabaadb31e6",
+		"_postman_id": "2663eb16-3d3a-45d5-b8c0-b7ca2451e137",
 		"name": "FetinNet",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "35951080"
@@ -832,6 +832,344 @@
 								"delete",
 								"jorginflaplrpl@email.com"
 							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Projetos",
+			"item": [
+				{
+					"name": "Login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function(){",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "X-XSRF-TOKEN",
+								"value": "{{Cookie}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"username\" : \"pizz@\",\n    \"password\" : \"123\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BaseURL}}login",
+							"host": [
+								"{{BaseURL}}login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Token",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let response = pm.response.json();",
+									"pm.environment.set('Cookie', response.token);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BaseURL}}get-csrf-token",
+							"host": [
+								"{{BaseURL}}get-csrf-token"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Todos os Times",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Recebe um array de times\", function () {\r",
+									"    const jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData).to.be.an(\"array\");\r",
+									"    if (jsonData.length > 0) {\r",
+									"        pm.expect(jsonData[0]).to.have.property(\"numeroGrupo\");\r",
+									"    }\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BaseURL}}api/v1/Time/all",
+							"host": [
+								"{{BaseURL}}api"
+							],
+							"path": [
+								"v1",
+								"Time",
+								"all"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Deleta time",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Time deletado com sucesso\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "X-XSRF-TOKEN",
+								"value": "{{Cookie}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{BaseURL}}api/v1/Time/delete?numgrupo=316",
+							"host": [
+								"{{BaseURL}}api"
+							],
+							"path": [
+								"v1",
+								"Time",
+								"delete"
+							],
+							"query": [
+								{
+									"key": "numgrupo",
+									"value": "316"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Deleta time Inexistente",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Time não encontrado\", function () {\r",
+									"    pm.response.to.have.status(404);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "X-XSRF-TOKEN",
+								"value": "{{Cookie}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{BaseURL}}api/v1/Time/delete?numgrupo=1000",
+							"host": [
+								"{{BaseURL}}api"
+							],
+							"path": [
+								"v1",
+								"Time",
+								"delete"
+							],
+							"query": [
+								{
+									"key": "numgrupo",
+									"value": "1000"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Cria projeto",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "X-XSRF-TOKEN",
+								"value": "{{Cookie}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "titulo",
+									"value": "RelogiodoBen9000",
+									"type": "text"
+								},
+								{
+									"key": "status",
+									"value": "Desclassificado",
+									"type": "text"
+								},
+								{
+									"key": "paralela",
+									"value": "Outro",
+									"type": "text"
+								},
+								{
+									"key": "email_aluno1",
+									"value": "linguica@gmail.com",
+									"type": "text"
+								},
+								{
+									"key": "orientador_email",
+									"value": "chris@inatel.br",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{BaseURL}}api/v1/Time/create",
+							"host": [
+								"{{BaseURL}}api"
+							],
+							"path": [
+								"v1",
+								"Time",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Cria projeto com email inválido",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Não deu certo a criação\", function () {\r",
+									"    pm.response.to.have.status(500);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "X-XSRF-TOKEN",
+								"value": "{{Cookie}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "titulo",
+									"value": "RelogiodoBen9000",
+									"type": "text"
+								},
+								{
+									"key": "status",
+									"value": "Desclassificado",
+									"type": "text"
+								},
+								{
+									"key": "paralela",
+									"value": "Outro",
+									"type": "text"
+								},
+								{
+									"key": "email_aluno1",
+									"value": "3213219312830918",
+									"type": "text"
+								},
+								{
+									"key": "orientador_email",
+									"value": "chris@inatel.br",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{BaseURL}}api/v1/Time/create",
+							"host": [
+								"{{BaseURL}}api"
+							],
+							"path": [
+								"v1",
+								"Time",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Busca time por ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": ""
 						}
 					},
 					"response": []
