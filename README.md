@@ -6,17 +6,15 @@
 - [Estrutura do Repositório](#estrutura-do-repositório)
 - [Clonando o Repositório](#clonando-o-repositório)
 - [Instalando Dependências](#instalando-dependências)
-- [Executando a Suíte de Testes](#executando-a-suíte-de-testes)
-- [Gerando Relatórios de Testes](#gerando-relatórios-de-testes)
-- [Visualizando os Relatórios de Testes](#visualizando-os-relatórios-de-testes)
+- [Execução dos Testes](#execução-dos-testes)
+- [Documentações Específicas](#documentações-específicas)
 - [Tecnologias Utilizadas](#tecnologias-utilizadas)
 - [Autores](#autores)
-
 ---
 
 ## Visão Geral
 
-Este repositório contém a suíte de testes baseada em Cypress desenvolvida como parte da atividade da disciplina **S206 - Qualidade de Software**, oferecida pelo **INATEL - Instituto Nacional de Telecomunicações**. O objetivo deste projeto é praticar testes fim a fim (E2E) avaliando a funcionalidade de um site proposto.
+Este repositório contém listas de exercícios desenvolvidas na disciplina S206 - Qualidade de Software, do INATEL - Instituto Nacional de Telecomunicações. As atividades foram implementadas com foco em testes de software utilizando Cypress e Postman, explorando testes automatizados end-to-end e testes de API.
 
 ---
 
@@ -28,6 +26,14 @@ Este repositório contém a suíte de testes baseada em Cypress desenvolvida com
 │   └── e2e/                # Casos de teste E2E
 ├── mochawesome-report/    # Pasta dos relatórios HTML gerados
 ├── node_modules/          # Dependências instaladas
+├── postman/                 # Coleções e ambientes utilizados nos testes Postman
+│   ├── FetinNet.postman_collection.json         # Coleções de requisições Postman (.json)
+│   └── FetinEnv.postman_environment.json       # Arquivos de ambiente (.json)
+├── newman/                  # Pasta de saída dos relatórios gerados com o Newman
+│   └── newman-reporter.html
+├── docs/                    # Documentações específicas de Cypress e Postman
+│   ├── cypress.md
+│   └── postman.md
 ├── cypress.config.js      # Arquivo de configuração do Cypress
 ├── package.json           # Metadados do projeto e dependências
 ├── package-lock.json      # Árvore de dependências bloqueadas
@@ -55,7 +61,22 @@ Antes de executar os testes, instale as dependências listadas no arquivo `packa
 npm install
 ```
 
-Isso instalará o Cypress, Mochawesome e todas as demais dependências necessárias para rodar a suíte de testes e gerar relatórios.
+Isso instalará o Cypress, Mochawesome, Newman e todas as demais dependências necessárias para rodar a suíte de testes e gerar relatórios.
+
+---
+
+## Execução dos Testes
+
+A execução dos testes varia conforme a tecnologia utilizada. Abaixo estão as documentações detalhadas para cada caso.
+
+---
+
+## Documentações Específicas
+
+Acesse os links abaixo para instruções completas sobre cada uma das listas de exercícios:
+
+- [Documentação Cypress](./docs/cypress.md): instruções sobre como executar testes automatizados end-to-end com Cypress, incluindo geração de relatórios com Mochawesome.
+- [Documentação Postman](./docs/postman.md): instruções sobre como importar, configurar e executar os testes da coleção Postman.
 
 ---
 
@@ -111,9 +132,11 @@ Este relatório HTML fornece um resumo visual dos resultados dos testes, incluin
 
 ## Tecnologias Utilizadas
 
-- [Cypress](https://www.cypress.io/) - Framework de Testes E2E
-- [Mochawesome](https://github.com/adamgruber/mochawesome) - Gerador de Relatórios para Mocha
-- [Node.js](https://nodejs.org/) - Ambiente de Execução JavaScript
+- [Cypress](https://www.cypress.io/) - Framework de testes E2E
+- [Postman](https://www.postman.com/) - Plataforma de testes de APIs
+- [Node.js](https://nodejs.org/) - Ambiente de execução JavaScript
+- [Mochawesome](https://github.com/adamgruber/mochawesome) - Gerador de relatórios de testes
+
 
 ---
 
